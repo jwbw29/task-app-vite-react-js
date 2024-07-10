@@ -2,16 +2,18 @@
 
 import axios from "axios";
 
-// Check if running in Node.js environment
-const isNode =
-  typeof process !== "undefined" &&
-  process.versions != null &&
-  process.versions.node != null;
+// // Check if running in Node.js environment
+// const isNode =
+//   typeof process !== "undefined" &&
+//   process.versions != null &&
+//   process.versions.node != null;
 
-// Use import.meta.env if available, otherwise fallback to process.env for Node.js
-const apiUrl = isNode
-  ? process.env.VITE_API_URL || "http://localhost:8000"
-  : import.meta.env.VITE_API_URL || "http://localhost:8000";
+// // Use import.meta.env if available, otherwise fallback to process.env for Node.js
+// const apiUrl = isNode
+//   ? process.env.VITE_API_URL || "http://localhost:8000"
+//   : import.meta.env.VITE_API_URL || "http://localhost:8000";
+
+const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 export const getTasks = async () => {
   const response = await axios.get(`${apiUrl}/api/tasks`);

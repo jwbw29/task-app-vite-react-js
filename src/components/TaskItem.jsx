@@ -127,7 +127,7 @@ const TaskItem = ({ task, onToggle, onUpdate, onDelete }) => {
               <div className="grid gap-4 py-4">
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Input
-                    id="todoTitle"
+                    id="taskTitle"
                     value={title}
                     onChange={handleTitleChange}
                     onKeyDown={handleKeyDown}

@@ -5,7 +5,7 @@ export default {
   clearMocks: true,
   moduleFileExtensions: [...defaults.moduleFileExtensions, "js", "jsx"],
   setupFilesAfterEnv: ["<rootDir>/setupTests.js"],
-  testEnvironment: "jsdom",
+  testEnvironment: "jest-environment-jsdom",
   transform: {
     "^.+\\.[tj]sx?$": "babel-jest",
   },

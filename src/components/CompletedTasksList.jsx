@@ -9,7 +9,7 @@ const CompletedTasksList = ({ tasks = [], onToggle, onUpdate, onDelete }) => {
     <div className="flex flex-col listContainer gap-2">
       <ul>
         {completedTasks.map((task) => (
-          <li key={task.id}>
+          <li key={task.id} aria-label="completed task">
             <TaskItem
               key={task.id}
               task={task}

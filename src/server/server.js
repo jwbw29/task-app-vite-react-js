@@ -10,8 +10,28 @@ env.config();
 const app = express();
 const port = process.env.PORT || 8000;
 
+// Allow CORS for specific domains
+const allowedOrigins = [
+  "http://localhost:3000", // for local development
+  "https://task-app-vite-react-js.vercel.app/", // replace with your actual Vercel domain
+  "https://task-app-vite-react-js-git-main-justins-projects-bbe1d746.vercel.app",
+  "https://task-app-vite-react-80doecqkn-justins-projects-bbe1d746.vercel.app",
+];
+
 // Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true); // allow requests with no origin (like mobile apps, curl requests)
+      if (allowedOrigins.indexOf(origin) === -1) {
+        const msg =
+          "The CORS policy for this site does not allow access from the specified Origin.";
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    },
+  })
+);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 

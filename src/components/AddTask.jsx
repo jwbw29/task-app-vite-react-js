@@ -1,16 +1,20 @@
 // src/components/AddTask.jsx
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 const AddTask = ({ onCreate }) => {
   const [title, setTitle] = useState("");
 
+  const handleChange = (e) => {
+    setTitle(e.target.value);
+  };
+
   const handleCreate = () => {
     if (title.trim()) {
       onCreate(title);
-      setTitle("");
+      setTitle(""); // Clear input field
     }
   };
 
@@ -27,7 +31,7 @@ const AddTask = ({ onCreate }) => {
         type="text"
         placeholder="Add New Task"
         value={title}
-        onChange={(e) => setTitle(e.target.value)}
+        onChange={handleChange}
         onKeyDown={handleKeyDown}
       />
       <Button

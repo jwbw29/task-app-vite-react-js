@@ -1,6 +1,6 @@
 // src/pages/TasksPage.jsx
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import TasksList from "@/components/TasksList";
 import CompletedTasksList from "@/components/CompletedTasksList";
 import AddTask from "@/components/AddTask";
@@ -8,8 +8,8 @@ import { Button } from "@/components/ui/button";
 import ThemeToggle from "@/components/ThemeToggle";
 import { getTasks, updateTask, deleteTask, addTask } from "@/api/tasks";
 
-const TasksPage = () => {
-  const [tasks, setTasks] = useState([]);
+const TasksPage = ({ initialTasks }) => {
+  const [tasks, setTasks] = useState(initialTasks);
   const [showCompletedTasks, setShowCompletedTasks] = useState(true);
   const [hasCompletedTasks, setHasCompletedTasks] = useState(false);
 
@@ -94,7 +94,7 @@ const TasksPage = () => {
   };
 
   return (
-    <main className="flex flex-col w-full items-center min-h-screen">
+    <>
       <ThemeToggle />
       <div className="p-2 m-10">
         <h1>Tasks</h1>
@@ -106,15 +106,29 @@ const TasksPage = () => {
         onUpdate={handleUpdate}
         onDelete={handleDelete}
       />
-      <Button
-        aria-label="show button"
-        disabled={!hasCompletedTasks}
-        onClick={handleShowHide}
-        size="lg"
-        className="my-5"
-      >
-        {showCompletedTasks ? "Hide Completed" : "Show Completed"}
-      </Button>
+      {!showCompletedTasks || !hasCompletedTasks ? (
+        <Button
+          aria-label="show button"
+          // variant="secondary"
+          disabled={!hasCompletedTasks}
+          onClick={handleShowHide}
+          size="lg"
+          className="my-5"
+        >
+          Show Completed
+        </Button>
+      ) : (
+        <Button
+          aria-label="hide button"
+          variant="outline"
+          disabled={!hasCompletedTasks}
+          onClick={handleShowHide}
+          size="lg"
+          className="my-5"
+        >
+          Hide Completed
+        </Button>
+      )}
       {showCompletedTasks && (
         <CompletedTasksList
           tasks={tasks}
@@ -123,7 +137,7 @@ const TasksPage = () => {
           onDelete={handleDelete}
         />
       )}
-    </main>
+    </>
   );
 };
 

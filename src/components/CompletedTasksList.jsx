@@ -1,17 +1,17 @@
 // src/components/TasksList.jsx
 
-import React from "react";
 import TaskItem from "@/components/TaskItem";
 
-const TasksList = ({ tasks, onToggle, onUpdate, onDelete }) => {
-  const incompleteTasks = tasks.filter((task) => !task.completed);
+const CompletedTasksList = ({ tasks, onToggle, onUpdate, onDelete }) => {
+  const completedTasks = tasks.filter((task) => task.completed);
 
   return (
-    <div className="flex flex-col listContainer">
+    <div className="flex flex-col listContainer gap-2">
       <ul>
-        {incompleteTasks.map((task) => (
+        {completedTasks.map((task) => (
           <li key={task.id}>
             <TaskItem
+              key={task.id}
               task={task}
               onToggle={onToggle}
               onUpdate={onUpdate}
@@ -24,4 +24,4 @@ const TasksList = ({ tasks, onToggle, onUpdate, onDelete }) => {
   );
 };
 
-export default TasksList;
+export default CompletedTasksList;

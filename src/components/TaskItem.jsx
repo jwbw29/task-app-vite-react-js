@@ -1,7 +1,7 @@
 // src/components/TaskItem.jsx
 
-import React, { useState } from "react";
 import clsx from "clsx";
+import { useState } from "react";
 import { RxPencil2, RxTrash } from "react-icons/rx";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -14,7 +14,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "./ui/alert-dialog";
+} from "@/components/ui/alert-dialog";
 import {
   Dialog,
   DialogContent,
@@ -24,10 +24,10 @@ import {
   DialogTrigger,
   DialogFooter,
   DialogClose,
-} from "./ui/dialog";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
-import { Button } from "./ui/button";
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 
 const TaskItem = ({ task, onToggle, onUpdate, onDelete }) => {
   const [title, setTitle] = useState(task.title);
@@ -42,6 +42,16 @@ const TaskItem = ({ task, onToggle, onUpdate, onDelete }) => {
 
   const handleSave = () => {
     onUpdate(task.id, title);
+    const closeButton = document.querySelector(`#close-dialog-${task.id}`);
+    if (closeButton) {
+      closeButton.click();
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSave();
+    }
   };
 
   const handleDelete = () => {
@@ -120,18 +130,18 @@ const TaskItem = ({ task, onToggle, onUpdate, onDelete }) => {
                     id="todoTitle"
                     value={title}
                     onChange={handleTitleChange}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        handleSave();
-                      }
-                    }}
+                    onKeyDown={handleKeyDown}
                     className="col-span-4"
                   />
                 </div>
               </div>
               <DialogFooter>
                 <DialogClose>
-                  <Button type="submit" onClick={handleSave}>
+                  <Button
+                    id={`close-dialog-${task.id}`}
+                    type="submit"
+                    onClick={handleSave}
+                  >
                     Save Changes
                   </Button>
                 </DialogClose>

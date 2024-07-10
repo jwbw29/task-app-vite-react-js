@@ -2,7 +2,7 @@
 
 import TaskItem from "@/components/TaskItem";
 
-const CompletedTasksList = ({ tasks, onToggle, onUpdate, onDelete }) => {
+const CompletedTasksList = ({ tasks = [], onToggle, onUpdate, onDelete }) => {
   const completedTasks = tasks.filter((task) => task.completed);
 
   return (

@@ -94,7 +94,7 @@ const TasksPage = ({ initialTasks }) => {
   };
 
   return (
-    <>
+    <main className="flex flex-col w-full items-center min-h-screen">
       <ThemeToggle />
       <div className="p-2 m-10">
         <h1>Tasks</h1>
@@ -137,7 +137,7 @@ const TasksPage = ({ initialTasks }) => {
           onDelete={handleDelete}
         />
       )}
-    </>
+    </main>
   );
 };
 

@@ -9,6 +9,15 @@ const __dirname = path.dirname(__filename);
 
 export default defineConfig({
   plugins: [react({ jsxRuntime: "automatic" })],
+  server: {
+    proxy: {
+      "/api": {
+        target: "http://localhost:3001",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
+  },
   resolve: {
     alias: {
       "@components": path.resolve(__dirname, "./src/components"),

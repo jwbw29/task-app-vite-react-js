@@ -7,18 +7,22 @@ import AddTask from "@/components/AddTask";
 import { Button } from "@/components/ui/button";
 import ThemeToggle from "@/components/ThemeToggle";
 import { getTasks, updateTask, deleteTask, addTask } from "@/api/tasksClient";
+import TasksListSkeleton from "@/components/TasksListSkeleton";
 
 const TasksPage = ({ initialTasks }) => {
   const [tasks, setTasks] = useState(initialTasks);
   const [showCompletedTasks, setShowCompletedTasks] = useState(true);
   const [hasCompletedTasks, setHasCompletedTasks] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchTasks = async () => {
+      setLoading(true);
       const fetchedTasks = await getTasks();
       setTasks(fetchedTasks);
       const completedExist = fetchedTasks.some((task) => task.completed);
       setHasCompletedTasks(completedExist);
+      setLoading(false);
     };
 
     fetchTasks();
@@ -100,6 +104,7 @@ const TasksPage = ({ initialTasks }) => {
         <h1>Tasks</h1>
       </div>
       <AddTask onCreate={handleCreate} />
+      {loading && <TasksListSkeleton />}
       <TasksList
         tasks={tasks}
         onToggle={handleToggle}

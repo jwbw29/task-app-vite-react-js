@@ -1,5 +1,3 @@
-// api/tasks.js
-
 import { createClient } from "@supabase/supabase-js";
 
 // Supabase client
@@ -16,12 +14,10 @@ export default async (req, res) => {
     if (error) {
       return res.status(500).json({ error: error.message });
     }
-    console.log("Fetched tasks from DB: ", data);
     res.json(data);
   }
 
   if (req.method === "POST") {
-    console.log(req.body);
     const { title } = req.body;
     const newTask = { title, completed: false };
     const { data, error } = await supabase
@@ -33,21 +29,11 @@ export default async (req, res) => {
       return res.status(500).json({ error: error.message });
     }
 
-    // const { data: tasks, error: fetchError } = await supabase
-    //   .from("tasks")
-    //   .select("*");
-
-    // if (fetchError) {
-    //   return res.status(500).json({ error: fetchError.message });
-    // }
-
     res.json(data[0]);
   }
 
   if (req.method === "PUT") {
-    // update the task
-    // what can be updated? title, completed
-    const { id } = req.params;
+    const { id } = req.query;
     const { title, completed } = req.body;
 
     const { data, error } = await supabase
@@ -59,25 +45,18 @@ export default async (req, res) => {
       return res.status(500).json({ error: error.message });
     }
 
-    // return the updated task
-    const { data: updatedTask, error: fetchError } = await supabase
-      .from("tasks")
-      .select("*")
-      .eq("id", id);
-
-    res.json(updatedTask);
-    // OR return the updated list of tasks?
+    res.json(data);
   }
 
   if (req.method === "DELETE") {
-    // delete the task
-    const { id } = req.params;
+    const { id } = req.query;
 
     const { data, error } = await supabase.from("tasks").delete().eq("id", id);
-    // return the updated list of tasks
-    const { data: tasks, error: fetchError } = await supabase
-      .from("tasks")
-      .select("*");
-    res.json(tasks);
+
+    if (error) {
+      return res.status(500).json({ error: error.message });
+    }
+
+    res.json(data);
   }
 };

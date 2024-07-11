@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import TasksPage from "@/pages/TasksPage";
-import { getTasks } from "@/api/tasks";
+import { getTasks } from "api/tasks";
 
 jest.mock("@/api/tasks", () => ({
   getTasks: jest.fn(),

@@ -6,7 +6,7 @@ import CompletedTasksList from "@/components/CompletedTasksList";
 import AddTask from "@/components/AddTask";
 import { Button } from "@/components/ui/button";
 import ThemeToggle from "@/components/ThemeToggle";
-import { getTasks, updateTask, deleteTask, addTask } from "@/api/tasks";
+import { getTasks, updateTask, deleteTask, addTask } from "@/api/tasksClient";
 
 const TasksPage = ({ initialTasks }) => {
   const [tasks, setTasks] = useState(initialTasks);

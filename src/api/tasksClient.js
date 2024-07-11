@@ -2,18 +2,7 @@
 
 import axios from "axios";
 
-// // Check if running in Node.js environment
-// const isNode =
-//   typeof process !== "undefined" &&
-//   process.versions != null &&
-//   process.versions.node != null;
-
-// // Use import.meta.env if available, otherwise fallback to process.env for Node.js
-// const apiUrl = isNode
-//   ? process.env.VITE_API_URL || "http://localhost:8000"
-//   : import.meta.env.VITE_API_URL || "http://localhost:8000";
-
-const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:8000";
+const apiUrl = import.meta.env.VERCEL_URL || "http://localhost:3001"; // the <...> is new, but that's what chatGPT suggested. Could me a mistake
 
 export const getTasks = async () => {
   const response = await axios.get(`${apiUrl}/api/tasks`);

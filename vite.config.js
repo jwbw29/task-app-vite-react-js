@@ -9,9 +9,6 @@ const __dirname = path.dirname(__filename);
 
 export default defineConfig({
   plugins: [react({ jsxRuntime: "automatic" })],
-  build: {
-    outDir: "dist",
-  },
   resolve: {
     alias: {
       "@components": path.resolve(__dirname, "./src/components"),

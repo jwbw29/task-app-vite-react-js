@@ -4,9 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "frontend": "vite",
-    "backend": "vercel dev --listen 3001",
-    "dev": "concurrently \"pnpm run frontend\" \"pnpm run backend\"",
+    "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",

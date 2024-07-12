@@ -20,29 +20,35 @@ const TasksPage = ({ initialTasks }) => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
 
-  //// Anonymously authenticate the user
+  // Anonymously authenticate the user
   useEffect(() => {
     const signInAnonymously = async () => {
       const { user, error } = await supabase.auth.signIn({
         provider: "anonymous",
       });
-      if (error) console.error("Error signing in: ", error);
-      else setUser(user);
+      if (error) {
+        console.error("Error signing in: ", error);
+      } else {
+        console.log("User signed in:", user);
+        setUser(user);
+      }
     };
     signInAnonymously();
   }, []);
 
   useEffect(() => {
     const fetchTasks = async () => {
-      setLoading(true);
       if (user) {
+        setLoading(true);
+        console.log("Fetching tasks for user:", user.id);
         const fetchedTasks = await getTasks(user.id);
         setTasks(fetchedTasks);
         const completedExist = fetchedTasks.some((task) => task.completed);
         setHasCompletedTasks(completedExist);
-      const incompletedExist = fetchedTasks.some((task) => !task.completed);
-      setHasIncompletedTasks(incompletedExist);
-      setLoading(false);
+        const incompletedExist = fetchedTasks.some((task) => !task.completed);
+        setHasIncompletedTasks(incompletedExist);
+        setLoading(false);
+      }
     };
 
     fetchTasks();
@@ -146,7 +152,6 @@ const TasksPage = ({ initialTasks }) => {
       {!showCompletedTasks || !hasCompletedTasks ? (
         <Button
           aria-label="show button"
-          // variant="secondary"
           disabled={!hasCompletedTasks}
           onClick={handleShowHide}
           size="lg"

@@ -1,4 +1,4 @@
-// api/ping.js -- a simple query to ping the supabase database so that it doesn't turn off if there's no activity for 7 days
+// api/ping.js -- a simple query to ping the supabase database so that it doesn't turn off if there's no activity for 7 days.
 import { createClient } from "@supabase/supabase-js";
 
 const supabaseUrl = process.env.SUPABASE_URL;

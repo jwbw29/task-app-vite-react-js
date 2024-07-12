@@ -1,9 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
 
-// Log environment variables to verify they are being accessed correctly
-console.log("SUPABASE_URL:", process.env.SUPABASE_URL);
-console.log("SUPABASE_ANON_KEY:", process.env.SUPABASE_ANON_KEY);
-
 // Supabase client
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_ANON_KEY;
@@ -53,15 +49,22 @@ export default async (req, res) => {
 
     if (req.method === "PUT") {
       const { id } = req.query;
-      const { title, completed } = req.body;
+      const { title, completed, userId } = req.body; // Ensure userId is extracted from the body
+      console.log(`Updating task with id ${id} for user ${userId}`); // Log task update info
+      console.log(`New values - Title: ${title}, Completed: ${completed}`); // Log new task values
+
       const { data, error } = await supabase
         .from("tasks")
         .update({ title, completed })
         .eq("id", id)
         .eq("user_id", userId);
+
       if (error) {
+        console.error("Error updating task:", error); // Detailed logging
         throw error;
       }
+
+      console.log("Update successful:", data); // Log success message
       return res.status(200).json(data);
     }
 
@@ -80,7 +83,7 @@ export default async (req, res) => {
 
     return res.status(405).json({ error: "Method not allowed" });
   } catch (error) {
-    console.error("Error:", error);
+    console.error("Server error:", error); // Detailed logging
     return res.status(500).json({ error: error.message });
   }
 };

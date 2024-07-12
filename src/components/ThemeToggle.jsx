@@ -5,7 +5,7 @@ import { RxSun } from "react-icons/rx";
 import { RxMoon } from "react-icons/rx";
 
 const ThemeToggle = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);

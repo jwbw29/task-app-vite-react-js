@@ -7,7 +7,6 @@ export default function App() {
     <Router>
       <Routes>
         <Route path="/" element={<TasksPage />} />
-        <Route path="*" element={<div>404 Not Found</div>} />
       </Routes>
     </Router>
   );

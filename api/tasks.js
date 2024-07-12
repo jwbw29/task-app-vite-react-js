@@ -15,6 +15,7 @@ export default async (req, res) => {
     "GET, POST, PUT, DELETE, OPTIONS"
   );
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
   const { userId } = req.query;
 
   if (req.method === "OPTIONS") {

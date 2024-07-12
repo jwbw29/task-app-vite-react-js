@@ -1,6 +1,7 @@
 // src/pages/TasksPage.jsx
 
 import { useState, useEffect } from "react";
+import { supabase } from "@/lib/supabaseClient";
 import TasksList from "@/components/TasksList";
 import CompletedTasksList from "@/components/CompletedTasksList";
 import AddTask from "@/components/AddTask";
@@ -14,6 +15,19 @@ const TasksPage = ({ initialTasks }) => {
   const [showCompletedTasks, setShowCompletedTasks] = useState(true);
   const [hasCompletedTasks, setHasCompletedTasks] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
+
+  //// Anonymously authenticate the user
+  useEffect(() => {
+    const signInAnonymously = async () => {
+      const { user, error } = await supabase.auth.signIn({
+        provider: "anonymous",
+      });
+      if (error) console.error("Error signing in: ", error);
+      else setUser(user);
+    };
+    signInAnonymously();
+  }, []);
 
   useEffect(() => {
     const fetchTasks = async () => {

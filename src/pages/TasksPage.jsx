@@ -23,14 +23,12 @@ const TasksPage = ({ initialTasks }) => {
   // Anonymously authenticate the user
   useEffect(() => {
     const signInAnonymously = async () => {
-      const { user, error } = await supabase.auth.signIn({
-        provider: "anonymous",
-      });
+      const { data, error } = await supabase.auth.signInAnonymously();
       if (error) {
         console.error("Error signing in: ", error);
       } else {
-        console.log("User signed in:", user);
-        setUser(user);
+        console.log("User signed in:", data.user);
+        setUser(data.user);
       }
     };
     signInAnonymously();

@@ -32,15 +32,17 @@ const TasksPage = ({ initialTasks }) => {
   useEffect(() => {
     const fetchTasks = async () => {
       setLoading(true);
-      const fetchedTasks = await getTasks();
-      setTasks(fetchedTasks);
-      const completedExist = fetchedTasks.some((task) => task.completed);
-      setHasCompletedTasks(completedExist);
+      if (user) {
+        const fetchedTasks = await getTasks(user.id);
+        setTasks(fetchedTasks);
+        const completedExist = fetchedTasks.some((task) => task.completed);
+        setHasCompletedTasks(completedExist);
+      }
       setLoading(false);
     };
 
     fetchTasks();
-  }, []);
+  }, [user]);
 
   const handleShowHide = () => {
     setShowCompletedTasks((prev) => !prev);
@@ -61,7 +63,7 @@ const TasksPage = ({ initialTasks }) => {
     const updatedTask = updatedTasks.find((task) => task.id === id);
     if (updatedTask) {
       try {
-        await updateTask(id, updatedTask.title, completed);
+        await updateTask(user.id, id, updatedTask.title, completed);
       } catch (error) {
         console.error("Error updating task:", error);
       }
@@ -80,7 +82,7 @@ const TasksPage = ({ initialTasks }) => {
     const updatedTask = updatedTasks.find((task) => task.id === id);
     if (updatedTask) {
       try {
-        await updateTask(id, title, updatedTask.completed);
+        await updateTask(user.id, id, title, updatedTask.completed);
       } catch (error) {
         console.error("Error updating task:", error);
       }
@@ -91,7 +93,7 @@ const TasksPage = ({ initialTasks }) => {
 
   const handleDelete = async (id) => {
     try {
-      await deleteTask(id);
+      await deleteTask(user.id, id);
       const updatedTasks = tasks.filter((task) => task.id !== id);
       setTasks(updatedTasks);
       updateCompletedTasks(updatedTasks);
@@ -102,7 +104,7 @@ const TasksPage = ({ initialTasks }) => {
 
   const handleCreate = async (title) => {
     try {
-      const newTask = await addTask(title);
+      const newTask = await addTask(user.id, title);
       const updatedTasks = [...tasks, newTask];
       setTasks(updatedTasks);
       updateCompletedTasks(updatedTasks);

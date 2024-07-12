@@ -15,6 +15,7 @@ const TasksPage = ({ initialTasks }) => {
   const [tasks, setTasks] = useState(initialTasks);
   const [showCompletedTasks, setShowCompletedTasks] = useState(true);
   const [hasCompletedTasks, setHasCompletedTasks] = useState(false);
+  const [hasIncompletedTasks, setHasIncompletedTasks] = useState(false);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
   const [sessionChecked, setSessionChecked] = useState(false); // Flag to ensure session is checked once
@@ -73,6 +74,8 @@ const TasksPage = ({ initialTasks }) => {
         setTasks(fetchedTasks);
         const completedExist = fetchedTasks.some((task) => task.completed);
         setHasCompletedTasks(completedExist);
+        const incompletedExist = fetchedTasks.some((task) => !task.completed);
+        setHasIncompletedTasks(incompletedExist);
         setLoading(false);
       }
     };
@@ -89,12 +92,18 @@ const TasksPage = ({ initialTasks }) => {
     setHasCompletedTasks(completedExist);
   };
 
+  const updateIncompletedTasks = (updatedTasks) => {
+    const incompletedExist = updatedTasks.some((task) => !task.completed);
+    setHasIncompletedTasks(incompletedExist);
+  };
+
   const handleToggle = async (id, completed) => {
     const updatedTasks = tasks.map((task) =>
       task.id === id ? { ...task, completed } : task
     );
     setTasks(updatedTasks);
     updateCompletedTasks(updatedTasks);
+    updateIncompletedTasks(updatedTasks);
 
     const updatedTask = updatedTasks.find((task) => task.id === id);
     if (updatedTask) {
@@ -114,6 +123,7 @@ const TasksPage = ({ initialTasks }) => {
     );
     setTasks(updatedTasks);
     updateCompletedTasks(updatedTasks);
+    updateIncompletedTasks(updatedTasks);
 
     const updatedTask = updatedTasks.find((task) => task.id === id);
     if (updatedTask) {
@@ -133,6 +143,7 @@ const TasksPage = ({ initialTasks }) => {
       const updatedTasks = tasks.filter((task) => task.id !== id);
       setTasks(updatedTasks);
       updateCompletedTasks(updatedTasks);
+      updateIncompletedTasks(updatedTasks);
     } catch (error) {
       console.error("Error deleting task:", error);
     }
@@ -144,6 +155,7 @@ const TasksPage = ({ initialTasks }) => {
       const updatedTasks = [...tasks, newTask];
       setTasks(updatedTasks);
       updateCompletedTasks(updatedTasks);
+      updateIncompletedTasks(updatedTasks);
     } catch (error) {
       console.error("Error adding task:", error);
     }
@@ -157,7 +169,9 @@ const TasksPage = ({ initialTasks }) => {
       </div>
       <AddTask onCreate={handleCreate} />
       {loading && <TasksListSkeleton />}
-      {(!tasks || tasks.length === 0) && !loading && <NoTasks />}
+      {(!tasks || tasks.length === 0 || !hasIncompletedTasks) && !loading && (
+        <NoTasks />
+      )}
       <TasksList
         tasks={tasks}
         onToggle={handleToggle}

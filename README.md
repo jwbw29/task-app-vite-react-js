@@ -48,13 +48,10 @@ Run locally
 - Week View
 - Events and Tasks in same list/view with a different style for each
 
-## Screenshots
-
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
 
 ## Demo
 
-Insert gif or link to demo
+![Demo](public/screenshots/demo.gif)
 
 ## License
 

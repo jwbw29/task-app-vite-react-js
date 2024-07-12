@@ -10,13 +10,13 @@ This is a simple Task List app that I hope to add to in the future.
 Install dependencies
 
 ```bash
-  npm install
+  pnpm install
 ```
 
 Run locally
 
 ```bash
-  npm run dev
+  pnpm run dev
 ```
 
 ## Tech Stack
@@ -40,6 +40,8 @@ Run locally
 
 [Project Planning](https://cubic-ellipse-88d.notion.site/Task-App-04200ed49f3e483eb7dab1a8783770a7)
 
+- Authentication to save your own tasks
+- Drag Tasks
 - Due Date
 - Priorities
 - Weather API to display weather for the day

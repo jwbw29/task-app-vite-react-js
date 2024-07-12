@@ -24,7 +24,7 @@ Run locally
 - **Front-end**: Vite + React
 - **Back-End**: Node
 - **Database**: Supabase
-- **Authentication**: TBD
+- **Authentication**: Supabase
 - **Front-End Deployment**: Vercel
 - **Back-End Deployment**: Vercel Serverless
 
@@ -47,7 +47,6 @@ Run locally
 - Weather API to display weather for the day
 - Week View
 - Events and Tasks in same list/view with a different style for each
-
 
 ## Demo
 

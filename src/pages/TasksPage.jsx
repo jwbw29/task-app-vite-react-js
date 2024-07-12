@@ -1,5 +1,3 @@
-// src/pages/TasksPage.jsx
-
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import TasksList from "@/components/TasksList";
@@ -16,20 +14,31 @@ const TasksPage = ({ initialTasks }) => {
   const [showCompletedTasks, setShowCompletedTasks] = useState(true);
   const [hasCompletedTasks, setHasCompletedTasks] = useState(false);
   const [hasIncompletedTasks, setHasIncompletedTasks] = useState(false);
-
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
-  const [sessionChecked, setSessionChecked] = useState(false); // Flag to ensure session is checked once
+  const [sessionChecked, setSessionChecked] = useState(false);
 
   // Function to save session to local storage
   const saveSession = (session) => {
-    localStorage.setItem("supabase_session", JSON.stringify(session));
+    try {
+      localStorage.setItem("supabase_session", JSON.stringify(session));
+    } catch (error) {
+      console.error("Error saving session:", error);
+    }
   };
 
   // Function to load session from local storage
   const loadSession = () => {
-    const session = localStorage.getItem("supabase_session");
-    return session ? JSON.parse(session) : null;
+    try {
+      const session = localStorage.getItem("supabase_session");
+      if (session) {
+        return JSON.parse(session);
+      }
+      return null;
+    } catch (error) {
+      console.error("Error loading session:", error);
+      return null;
+    }
   };
 
   // Function to sign in anonymously

@@ -15,13 +15,17 @@ export default async (req, res) => {
     "GET, POST, PUT, DELETE, OPTIONS"
   );
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  const { userId } = req.query;
 
   if (req.method === "OPTIONS") {
     return res.status(200).send("OK");
   }
 
   if (req.method === "GET") {
-    const { data, error } = await supabase.from("tasks").select("*");
+    const { data, error } = await supabase
+      .from("tasks")
+      .select("*")
+      .eq("user_id", userId);
     if (error) {
       return res.status(500).json({ error: error.message });
     }
@@ -29,8 +33,8 @@ export default async (req, res) => {
   }
 
   if (req.method === "POST") {
-    const { title } = req.body;
-    const newTask = { title, completed: false };
+    const { title, userId } = req.body;
+    const newTask = { title, completed: false, user_id: userId };
     const { data, error } = await supabase
       .from("tasks")
       .insert([newTask])
@@ -50,7 +54,8 @@ export default async (req, res) => {
     const { data, error } = await supabase
       .from("tasks")
       .update({ title, completed })
-      .eq("id", id);
+      .eq("id", id)
+      .eq("user_id", userId);
 
     if (error) {
       return res.status(500).json({ error: error.message });
@@ -62,7 +67,11 @@ export default async (req, res) => {
   if (req.method === "DELETE") {
     const { id } = req.query;
 
-    const { data, error } = await supabase.from("tasks").delete().eq("id", id);
+    const { data, error } = await supabase
+      .from("tasks")
+      .delete()
+      .eq("id", id)
+      .eq("user_id", userId);
 
     if (error) {
       return res.status(500).json({ error: error.message });

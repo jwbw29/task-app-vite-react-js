@@ -21,12 +21,12 @@ Run locally
 
 ## Tech Stack
 
-- **Front-end**: Next.js / React
-- **Back-End**: Node / Express
+- **Front-end**: Vite + React
+- **Back-End**: Node
 - **Database**: Supabase
-- **Authentication**: Supabase
+- **Authentication**: TBD
 - **Front-End Deployment**: Vercel
-- **Back-End Deployment**: AWS
+- **Back-End Deployment**: Vercel Serverless
 
 ## Features
 

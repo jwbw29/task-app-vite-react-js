@@ -34,7 +34,7 @@ export default async (req, res) => {
 
   if (req.method === "POST") {
     const { title, userId } = req.body;
-    const newTask = { title, completed: false, userId: userId };
+    const newTask = { title, completed: false, user_id: userId };
     const { data, error } = await supabase
       .from("tasks")
       .insert([newTask])

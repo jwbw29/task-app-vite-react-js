@@ -14,7 +14,7 @@ export const updateTask = async (userId, id, title, completed) => {
 };
 
 export const deleteTask = async (userId, id) => {
-  await axios.delete(`${apiUrl}/tasks?id=${id}`, { params: { userId } }); // this (params userId) was my guess. ChatGPT didn't provide this code
+  await axios.delete(`${apiUrl}/tasks?id=${id}`, { params: { userId } });
 };
 
 export const addTask = async (userId, title) => {

@@ -8,4 +8,3 @@ export default function NoTasks() {
     </div>
   );
 }
-// {(!tasks || tasks.length === 0) && !loading && <NoTasks />}

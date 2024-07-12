@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import ThemeToggle from "@/components/ThemeToggle";
 import { getTasks, updateTask, deleteTask, addTask } from "@/api/tasksClient";
 import TasksListSkeleton from "@/components/TasksListSkeleton";
+import NoTasks from "@/components/NoTasks";
 
 const TasksPage = ({ initialTasks }) => {
   const [tasks, setTasks] = useState(initialTasks);
@@ -156,6 +157,7 @@ const TasksPage = ({ initialTasks }) => {
       </div>
       <AddTask onCreate={handleCreate} />
       {loading && <TasksListSkeleton />}
+      {(!tasks || tasks.length === 0) && !loading && <NoTasks />}
       <TasksList
         tasks={tasks}
         onToggle={handleToggle}
